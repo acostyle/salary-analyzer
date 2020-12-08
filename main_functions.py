@@ -10,19 +10,6 @@ def predict_rub_salary(salary_from, salary_to):
         return salary_to * 0.8
 
 
-def predict_rub_salary_hh(vacancy):
-    salary = vacancy['salary']
-    if salary is None or salary['currency'] != 'RUR':
-        return None
-    return predict_rub_salary(salary['from'], salary['to'])
-
-
-def predict_rub_salary_sj(vacancy):
-    if vacancy['currency'] != 'rub':
-        return None
-    return predict_rub_salary(vacancy['payment_from'], vacancy['payment_to'])
-
-
 def get_statistics_by_language(vacancies, predict_salary, popular_languages):
     statistics_by_lang = {language: {} for language in popular_languages}
 
@@ -33,7 +20,7 @@ def get_statistics_by_language(vacancies, predict_salary, popular_languages):
 
         for vacancy in vacancies[language]:
             predicted_rub_salary = predict_salary(vacancy)
-            if predicted_rub_salary is not None:
+            if predicted_rub_salary:
                 salaries_by_language.append(predicted_rub_salary)
 
         amount_of_salaries_to_calc_avg = len(salaries_by_language)
@@ -54,10 +41,10 @@ def print_statistics(statistics, title):
     for language in statistics:
         table_data.append(
             (
-                f"{language}",
-                f"{statistics[language]['vacancies_found']}",
-                f"{statistics[language]['vacancies_processed']}",
-                f"{statistics[language]['average_salary']}",
+                language,
+                statistics[language]['vacancies_found'],
+                statistics[language]['vacancies_processed'],
+                statistics[language]['average_salary'],
             )
         )
     table_instance = DoubleTable(table_data, title)
