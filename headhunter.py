@@ -28,12 +28,6 @@ def get_vacancies_from_hh(popular_languages):
             page += 1
             pages_number = vacancies['pages']
 
-            vacancies_limit_page = 19
-
-            # it's not possible to get more than 2000 vacancies
-            if page == vacancies['pages'] or page == vacancies_limit_page:
-                break
-
     return hh_languages_result
 
 

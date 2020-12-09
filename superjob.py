@@ -30,12 +30,6 @@ def get_vacancies_from_sj(token, popular_languages):
             page += 1
             pages_number = vacancies['more']
 
-            vacancies_limit_page = 5
-
-            # it's not possible to get more than 500 vacancies
-            if page == vacancies_limit_page:
-                break
-
     return vacancies_by_language
 
 
